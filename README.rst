@@ -7,8 +7,8 @@
 .. image:: https://codecov.io/github/yourlabs/django-cities-light/coverage.svg?branch=stable/3.x.x
     :target: https://codecov.io/github/yourlabs/django-cities-light?branch=stable/3.x.x
 
-django-cities-light -- *Simple django-cities alternative*
-=========================================================
+django-cities-light -- *Simple django-cities alternative with spatial support *
+===============================================================================
 
 This add-on provides models and commands to import country, region/state, and
 city data in your database.
@@ -16,23 +16,17 @@ city data in your database.
 The data is pulled from `GeoNames
 <http://www.geonames.org/>`_ and contains cities, regions/states and countries.
 
-Spatial query support is not required by this application.
-
 This application is very simple and is useful if you want to make a simple
-address book for example. If you intend to build a fully featured spatial
-database, you should use
+address book for example. If you intend to build a fully featured database,
+you should use
 `django-cities
 <https://github.com/coderholic/django-cities>`_.
 
 Requirements:
 
 - Python 2.7 or 3.3,
-- Django >= 1.8
-- MySQL or PostgreSQL or SQLite.
-
-Yes, for some reason, code that used to work on MySQL (not without pain xD)
-does not work anymore. So we're now using django.db.transaction.atomic which
-comes from Django 1.6 just to support MySQL quacks.
+- Django 1.9
+- PostgreSQL
 
 Upgrade
 -------
@@ -44,11 +38,7 @@ Installation
 
 Install django-cities-light::
 
-    pip install django-cities-light
-
-Or the development version::
-
-    pip install -e git+git@github.com:yourlabs/django-cities-light.git#egg=cities_light
+    pip install -e git+git@github.com:max-arnold/django-cities-light.git@spatial#egg=cities_light
 
 Add `cities_light` to your `INSTALLED_APPS`.
 
@@ -109,9 +99,8 @@ Then run the full import::
     test_project/manage.py migrate
     test_project/manage.py cities_light
 
-There are several environment variables which affect project settings (like DB_ENGINE and CI), you can find them all in test_project/settings.py.
-
-To run the test suite you need to have postgresql or mysql installed with passwordless login, or just use sqlite. Otherwise the tests which try to create/drop database will fail.
+To run the test suite you need to have postgresql installed with passwordless login.
+Otherwise the tests which try to create/drop database will fail.
 
 Running the full test suite::
 
@@ -119,15 +108,15 @@ Running the full test suite::
 
 To run the tests in specific environment use the following command::
 
-    tox -e py27-django18-sqlite
+    tox -e py27-django19-postgresql
 
 And to run one specific test use this one::
 
-    tox -e py27-django18-sqlite -- cities_light/tests/test_form.py::FormTestCase::testCountryFormNameAndContinentAlone
+    tox -e py27-django19-postgresql -- cities_light/tests/test_form.py::FormTestCase::testCountryFormNameAndContinentAlone
 
 To run it even faster, you can switch to specific tox virtualenv::
 
-    source .tox/py27-django18-sqlite/bin/activate
+    source .tox/py27-django19-postgresql/bin/activate
     CI=true test_project/manage.py test cities_light.tests.test_form.FormTestCase.testCountryFormNameAndContinentAlone
 
 If you want to build the docs, use the following steps::

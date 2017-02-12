@@ -259,11 +259,11 @@ Awesome contributions were merged:
 
     In 1.9.0, you had to query like::
 
-        City.objects.filter(search_names__icontains=to_search('Paris, Fra'))
+	City.objects.filter(search_names__icontains=to_search('Paris, Fra'))
 
     In 1.9.1, passing the value through to_search() is automatic::
 
-        City.objects.filter(search_names__icontains='Paris, Fra')
+	City.objects.filter(search_names__icontains='Paris, Fra')
 
     Keep in mind that 'Paris, Fra' will be converted in 'parisfra',
     which is useable against search_names column.
@@ -281,17 +281,17 @@ Awesome contributions were merged:
     - If filtering cities to import with city_items_pre_import, make a matching
       signal reciever for region_items_pre_import new signal. For example::
 
-            COUNTRIES = ('FR', 'US', 'BE', 'GB', 'ES', 'PT', 'DE', 'NL')
+	    COUNTRIES = ('FR', 'US', 'BE', 'GB', 'ES', 'PT', 'DE', 'NL')
 
-            def filter_city_import(sender, items, **kwargs):
-                if items[8] not in COUNTRIES:
-                    raise cities_light.InvalidItems()
-            cities_light.signals.city_items_pre_import.connect(filter_city_import)
+	    def filter_city_import(sender, items, **kwargs):
+		if items[8] not in COUNTRIES:
+		    raise cities_light.InvalidItems()
+	    cities_light.signals.city_items_pre_import.connect(filter_city_import)
 
-            def filter_region_import(sender, items, **kwargs):
-                if items[0].split('.')[0] not in COUNTRIES:
-                    raise cities_light.InvalidItems()
-            cities_light.signals.region_items_pre_import.connect(filter_region_import)
+	    def filter_region_import(sender, items, **kwargs):
+		if items[0].split('.')[0] not in COUNTRIES:
+		    raise cities_light.InvalidItems()
+	    cities_light.signals.region_items_pre_import.connect(filter_region_import)
 
     Also there is now a progress bar in the cities_light command.
 
@@ -316,33 +316,33 @@ Awesome contributions were merged:
     We had to fix migration 0003 for mysql. So to upgrade from 1.3, 1.4, or 1.5
     to 1.5.1, do::
 
-        ./manage.py migrate cities_light 0002
-        pip install -U django-cities-light
-        ./manage.py migrate cities_light
+	./manage.py migrate cities_light 0002
+	pip install -U django-cities-light
+	./manage.py migrate cities_light
 
 
 2012-05-19 1.0 to 1.1
 
     Backward compatibility breaks:
-        - cities_light.widgets moved to
-          cities_light.contrib.autocomplete_light_widgets,
+	- cities_light.widgets moved to
+	  cities_light.contrib.autocomplete_light_widgets,
 
-        - cities_light.lookups moved to
-          cities_light.contrib.ajax_selects_lookups,
+	- cities_light.lookups moved to
+	  cities_light.contrib.ajax_selects_lookups,
 
-        - cities_light.autocomplete_light_registry moved to
-          cities_light.contrib.autocomplete_light_channels,
+	- cities_light.autocomplete_light_registry moved to
+	  cities_light.contrib.autocomplete_light_channels,
 
-        - cities_light does not auto-register channels anymore (because you now
-          have the choice between a basic channel and the remote channel.
+	- cities_light does not auto-register channels anymore (because you now
+	  have the choice between a basic channel and the remote channel.
 
     New features:
 
-        - latitude and longitude fields,
-        - search_names,
-        - djangorestframework integration,
-        - autocomplete_light+djangorestframework integration.
+	- latitude and longitude fields,
+	- search_names,
+	- djangorestframework integration,
+	- autocomplete_light+djangorestframework integration.
 
     New author:
 
-        - Riccardo Magliocchetti
+	- Riccardo Magliocchetti

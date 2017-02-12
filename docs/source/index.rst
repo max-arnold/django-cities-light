@@ -12,29 +12,10 @@ Contents:
 FAQ
 ===
 
-Recommended RDBMS
------------------
+Supported RDBMS
+---------------
 
-The recommended RDBMS is PostgreSQL, it's faster, safer, saner, more robust and
-simpler than MySQL.
-
-You can see on travis that build jobs with MySQL take twice as long as build
-jobs on PostgreSQL and SQLite.
-
-MySQL errors with special characters, how to fix it ?
------------------------------------------------------
-
-The ``cities_light`` command is `continuously tested on travis-ci
-<http://travis-ci.org/yourlabs/django-cities-light>`_ on all supported
-databases: if it works there then it should work for you.
-
-If you're new to development in general, you might not be familiar with the
-concept of encodings and collations. Unless you have a good reason, you
-**must** have utf-8 database tables. See `MySQL documentation
-<http://dev.mysql.com/doc/refman/5.0/en/charset-unicode.html>`_ for details.
-
-We're pointing to MySQL documentations because PostgreSQL users probably know
-what UTF-8 is and won't have any problem with that.
+The only supported RDBMS is PostgreSQL.
 
 Some data fail to import, how to skip them ?
 --------------------------------------------
@@ -60,4 +41,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
