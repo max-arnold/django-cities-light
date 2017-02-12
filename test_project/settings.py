@@ -79,16 +79,11 @@ WSGI_APPLICATION = 'wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.' + os.environ.get('DB_ENGINE', 'sqlite3'),
-        'NAME': os.environ.get('DB_NAME', 'db.sqlite'),
-        'USER': os.environ.get('DB_USER', ''),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'cities_light_test',
+        'USER': 'postgres',
     }
 }
-
-if sys.version_info[0] < 3 and 'mysql' in DATABASES['default']['ENGINE']:
-    DATABASES['default']['OPTIONS'] = {
-        'autocommit': True,
-    }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -107,7 +102,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

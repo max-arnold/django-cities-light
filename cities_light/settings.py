@@ -78,7 +78,7 @@ because it's probably project specific.
 .. py:data:: INDEX_SEARCH_NAMES
 
     If your database engine for cities_light supports indexing TextFields (ie.
-    it is **not** MySQL), then this should be set to True. You might have to
+    PostgreSQL), then this should be set to True. You might have to
     override this setting with ``settings.CITIES_LIGHT_INDEX_SEARCH_NAMES`` if
     using several databases for your project.
 
@@ -114,7 +114,7 @@ CITY_SOURCES = getattr(settings, 'CITIES_LIGHT_CITY_SOURCES',
 TRANSLATION_SOURCES = getattr(settings, 'CITIES_LIGHT_TRANSLATION_SOURCES',
     ['http://download.geonames.org/export/dump/alternateNames.zip'])
 TRANSLATION_LANGUAGES = getattr(settings, 'CITIES_LIGHT_TRANSLATION_LANGUAGES',
-    ['es', 'en', 'pt', 'de', 'pl', 'abbr'])
+    ['es', 'en', 'pt', 'de', 'ru'])
 
 SOURCES = list(COUNTRY_SOURCES) + list(REGION_SOURCES) + list(CITY_SOURCES)
 SOURCES += TRANSLATION_SOURCES
@@ -125,6 +125,8 @@ DATA_DIR = getattr(settings, 'CITIES_LIGHT_DATA_DIR',
 
 INCLUDE_COUNTRIES = getattr(settings, 'CITIES_LIGHT_INCLUDE_COUNTRIES', None)
 
+INDEX_SEARCH_NAMES = getattr(settings, 'CITIES_LIGHT_INDEX_SEARCH_NAMES', True)
+
 # Feature codes are described in the "P city, village" section at
 # http://www.geonames.org/export/codes.html
 INCLUDE_CITY_TYPES = getattr(
@@ -133,14 +135,6 @@ INCLUDE_CITY_TYPES = getattr(
     ['PPL', 'PPLA', 'PPLA2', 'PPLA3', 'PPLA4', 'PPLC',
      'PPLF', 'PPLG', 'PPLL', 'PPLR', 'PPLS', 'STLMT']
 )
-
-# MySQL doesn't support indexing TextFields
-INDEX_SEARCH_NAMES = getattr(settings, 'CITIES_LIGHT_INDEX_SEARCH_NAMES', None)
-if INDEX_SEARCH_NAMES is None:
-    INDEX_SEARCH_NAMES = True
-    for database in list(settings.DATABASES.values()):
-        if 'mysql' in database['ENGINE'].lower():
-            INDEX_SEARCH_NAMES = False
 
 DEFAULT_APP_NAME = 'cities_light'
 CITIES_LIGHT_APP_NAME = getattr(settings, 'CITIES_LIGHT_APP_NAME',

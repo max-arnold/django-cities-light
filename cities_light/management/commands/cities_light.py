@@ -16,7 +16,7 @@ except ImportError:
     import pickle
 
 from django.conf import settings
-from django.db import transaction, connection
+from django.db import transaction
 from django.db import reset_queries, IntegrityError
 from django.core.management.base import BaseCommand
 
@@ -461,11 +461,6 @@ It is possible to force the import of files which weren't downloaded using the
                 (Region, {}),
                 (City, {}),
             ))
-
-        # https://code.djangoproject.com/ticket/21597#comment:29
-        # https://github.com/yourlabs/django-cities-light/commit/e7f69af01760c450b4a72db84fda3d98d6731928
-        if 'mysql' in settings.DATABASES['default']['ENGINE']:
-            connection.close()
 
         try:
             translation_items_pre_import.send(sender=self, items=items)
