@@ -38,6 +38,12 @@ class MemoryUsageWidget(progressbar.widgets.WidgetBase):
         return '?? kB'
 
 
+def without(d, key):
+    new_d = d.copy()
+    new_d.pop(key)
+    return new_d
+
+
 class Command(BaseCommand):
     help = """
 Download all files in if they were updated or if --force
@@ -126,5 +132,19 @@ option was used. Import country data if they were downloaded or if
         self.progress_enabled = options.get('progress')
 
         self.progress_init()
+        self.progress_start(1)
+
+        dst_countries = {
+            c['geoname_id']: without(c, 'geoname_id')
+            for c in Country.objects.values()
+        }
+        dst_regions = {
+            r['geoname_id']: without(r, 'geoname_id')
+            for r in Region.objects.values()
+        }
+        dst_cities = {
+            c['geoname_id']: without(c, 'geoname_id')
+            for c in City.objects.values()
+        }
 
         self.progress_finish()
